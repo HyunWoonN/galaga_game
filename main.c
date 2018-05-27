@@ -10,13 +10,11 @@ typedef struct {
 void gotoxy(int x, int y, char* s)
 
 {
-
 	COORD Pos = { x * 2,y };
 
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
 
 	printf("%s", s);
-
 }
 
 void shoot_bullet(POS *ufo, POS *bullet)
@@ -28,12 +26,11 @@ void shoot_bullet(POS *ufo, POS *bullet)
 
 	for (int i = bullet[0].y; i > 0; i--)
 	{
-		gotoxy(bullet[0].x, i, "¨¬");
+		gotoxy(bullet[0].x, i, "Âº");
 		Sleep(30);
-		gotoxy(bullet[0].x, i + 1, " ");
+		gotoxy(bullet[0].x, i, " ");	
 	}
-	}
-	
+}	
 
 /* void remove_bullet(POS* ufo, POS* bullet)
 {
@@ -54,20 +51,12 @@ void move_ufo(POS* ufo, POS* bullet) {
 		{
 			key = _getch();
 			switch (key)
-			{
-			case 72:
-				dir = 0; //À§
-				break;
-
-			case 80:
-				dir = 1;  // ¾Æ·¡
-				break;
-
+			{		
 			case 75:
-				dir = 2;	//¿ÞÂÊ
+				dir = 2;	//ì™¼ìª½
 				break;
 
-			case 77:	//¿À¸¥ÂÊ
+			case 77:	//ì˜¤ë¥¸ìª½
 				dir = 3;
 				break;
 			}
@@ -76,6 +65,10 @@ void move_ufo(POS* ufo, POS* bullet) {
 
 	if (dir != -1)
 	{
+		if ((ufo[0].x == 2 && dir == 2) || (ufo[0].x == 57 && dir == 3))	
+		{
+			return;
+		}
 		int x = ufo[1].x;
 		int y = ufo[1].y;
 		gotoxy(ufo[1].x, ufo[1].y, " ");
@@ -106,33 +99,32 @@ void move_ufo(POS* ufo, POS* bullet) {
 	dir = -1;
 }
 
-
 void draw_ufo(POS *ufo)
 {
 	int x = ufo[0].x;
 	int y = ufo[0].y;
 	ufo[1].x = x;
 	ufo[1].y = y;
-	gotoxy(x, y, "¡ã");
-	gotoxy(x, y+1, "¡á");
-	gotoxy(x-1, y+2, "¡á¡á¡á");
-	gotoxy(x-2, y+3, "¢×");
-	gotoxy(x+2, y+3, "¢Ù");
-	gotoxy(x-1, y+3, "¢Ã¢Ã¢Ã");
-	gotoxy(x-1, y+4, "¢Â¢Â¢Â");
-	gotoxy(x, y+5, "¢Â");
+	gotoxy(x, y, "â–²");
+	gotoxy(x, y+1, "â– ");
+	gotoxy(x-1, y+2, "â– â– â– ");
+	gotoxy(x-2, y+3, "â†™");
+	gotoxy(x+2, y+3, "â†˜");
+	gotoxy(x-1, y+3, "â–£â–£â–£");
+	gotoxy(x-1, y+4, "â—ˆâ—ˆâ—ˆ");
+	gotoxy(x, y+5, "â—ˆ");
 }
+
 void draw_map()
 {
 
 }
 
-
 int main()
 {
 	POS ufo[100],bullet[100];
-	ufo[0].x = 10;
-	ufo[0].y = 10;
+	ufo[0].x = 28;	
+	ufo[0].y = 20;
 	int speed = 100;
 	int refreshRate = 50;
 	int cnt = 1;
